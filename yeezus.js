@@ -23,23 +23,7 @@ app.get('/', function (request, response) {
 });
 
 app.get('/yeezusTalks', function (request, response) {
-//    var _get = url.parse(request.url, true);
-//    var query = _get.query;
-//    request_url = request.url;
-//    console.log(request.ip + " is speaking to yeezus...");
-//
-//    restaurantData = {
-//        name        : (query.name) ? query.name : '',
-//        zip_code    : (query.zip_code) ? parseInt(query.zip_code) : 0,
-//        street_name : (query.street_name) ? query.street_name : '',
-//        building    : (query.building) ? query.building : '',
-//        telephone   : (query.telephone) ? query.telephone : '',
-//        URL         : (request.headers.referer) ? request.headers.referer : 'no-referer'
-//    };
-//
-//    mongoConnect.fetchRestaurant(restaurantData, function (responseBody) {
-//        response.json(buildResponse(responseBody));
-//    });
+
 });
 
 var getReply = function (data) {
