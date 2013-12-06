@@ -1,0 +1,27 @@
+{
+  "name": "digitalyeezus",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "https://github.com/visionmedia/express",
+    "querystring": "https://github.com/Gozala/querystring",
+    "nodealytics": "https://github.com/skookum/nodealytics",
+    "request": "~2.28.1",
+    "socket.io-client": "~0.9.16",
+    "socket.io": "~0.9.15"
+  },
+  "authors": [
+    "akil.harris <akil.harris@chillchillchillchillchillchill.com>"
+  ],
+  "description": "D1G1T4LY33ZU5",
+  "main": "yeezus.js",
+  "license": "MIT",
+  "homepage": "digitalyeezus.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}

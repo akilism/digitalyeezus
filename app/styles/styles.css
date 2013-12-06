@@ -1,0 +1,233 @@
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000318}}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  min-width: 940px;
+  max-width: 1695px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000326}}
+img {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000332}}
+h1 {
+  position: absolute;
+  top: .04%;
+  left: .15%;
+  font-family: 'Pacifico', cursive;
+  font-size: 8em;
+  margin: 0;
+  width: 100%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000342}}
+h2 {
+  margin: 0 0 0 1rem;
+  padding: 0;
+  font-size: 8em;
+  position: absolute;
+  background-color: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(255, 0, 4, 0.58)), color-stop(47%, rgba(255, 0, 4, 0.68)), color-stop(100%, rgba(0, 0, 0, 0.8)));
+  background-color: linear-gradient(135deg, rgba(255, 0, 4, 0.58) 0%, rgba(255, 0, 4, 0.68) 47%, rgba(0, 0, 0, 0.8) 100%);
+  /* W3C */
+  z-index: 2;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000352}}
+#wrapper {
+  text-align: center;
+  background-image: url("/images/d1g174l.png");
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  margin: 0 auto;
+  z-index: 5;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000365}}
+#digital_yeezus {
+  border: 4px none black;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+  background-image: url("/images/yeezus.png");
+  background-repeat: no-repeat;
+  position: absolute;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000375}}
+#banner_yeezus {
+  margin: 0 auto;
+  width: 100%;
+  z-index: 3;
+  position: relative;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000380}}
+#banner_yeezus div {
+  height: 20px;
+  width: 20%;
+  background-color: #ff1900;
+  position: absolute;
+  left: 80%;
+  transition: width .5s;
+  -webkit-transform: matrix(1, -0.2, 0, 1, 0, 0);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000389}}
+#banner_yeezus div:hover {
+  background-color: #5aff30;
+  width: 5%;
+  transition: width .5s;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000398}}
+.confess {
+  max-width: 83.5%;
+  font-family: 'Mrs Sheppards', cursive;
+  font-size: 14em;
+  margin: 0;
+  position: relative;
+  top: 0.4em;
+  /*left: 2%;*/
+  margin-left: -5%;
+  color: white;
+  -webkit-text-stroke: 34px rgba(0, 21, 255, 0.89);
+  -webkit-transform: rotate(-15deg);
+  -moz-text-stroke: 34px rgba(0, 21, 255, 0.89);
+  -moz-transform: rotate(-15deg);
+  -o-text-stroke: 34px rgba(0, 21, 255, 0.89);
+  -o-transform: rotate(-15deg);
+  -ms-text-stroke: 34px rgba(0, 21, 255, 0.89);
+  -ms-transform: rotate(-15deg);
+  transform: rotate(-15deg);
+  opacity: 0;
+  display: none;
+  line-height: 0.95em;
+  z-index: 4;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003123}}
+.confess:hover {
+  color: #fff800;
+  /*-webkit-text-stroke: 34px #fff;*/
+  /*-moz-text-stroke: 34px #fff;*/
+  /*-o-text-stroke: 34px #fff;*/
+  /*-ms-text-stroke: 34px #fff;*/
+  /*text-stroke: 34px #fff;*/
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003133}}
+.second {
+  -webkit-text-stroke: 0;
+  -moz-text-stroke: 0;
+  -o-text-stroke: 0;
+  -ms-text-stroke: 0;
+  text-stroke: 0;
+  position: absolute;
+  display: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003142}}
+.second:hover {
+  -webkit-text-stroke: 0;
+  -moz-text-stroke: 0;
+  -o-text-stroke: 0;
+  -ms-text-stroke: 0;
+  text-stroke: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003151}}
+#banners_and_junk {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003157}}
+.confessional {
+  height: 480px;
+  width: 640px;
+  border: 3px solid rgba(0, 21, 255, 0.89);
+  position: fixed;
+  top: 20%;
+  left: 18%;
+  background-color: rgba(0, 21, 255, 0.6666);
+  /*box-shadow: 12px 14px 11px #;*/
+  border-radius: 13px;
+  display: none;
+  padding: 10px;
+  text-align: left;
+  cursor: auto;
+  z-index: 5;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003174}}
+.confession {
+  height: 435px;
+  width: 621px;
+  border-radius: 6px 6px 0 0;
+  display: block;
+  background-color: rgba(37, 36, 36, 0.89);
+  padding: 10px;
+  border: none;
+  overflow: hidden;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003186}}
+.confession-input {
+  display: block;
+  position: absolute;
+  margin-top: -29px;
+  border-radius: 0 0 4px 4px;
+  width: 631px;
+  background-color: rgba(37, 36, 36, 0.89);
+  border: none;
+  font-size: 0.875em;
+  padding: 0;
+  margin: 0;
+  font-family: "Consolas", "Courier New", Courier, mono;
+  color: #92ff2c;
+  padding: 5px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003197}}
+.confession-input:focus {
+  outline: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003203}}
+input[type='button'],
+input[type='submit'] {
+  margin-top: 5px;
+  border: 0;
+  font-family: sans-serif;
+  font-size: 1.5em;
+  transition: 0.333s;
+  border-radius: 2px;
+  padding: 7px;
+  display: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003212}}
+input[type='button']:focus,
+input[type='submit']:focus {
+  outline: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003219}}
+.yeezus_talks,
+.user_talks {
+  font-size: 0.875em;
+  padding: 0;
+  margin: 0;
+  font-family: "Consolas", "Courier New", Courier, mono;
+  color: #92ff2c;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003223}}
+.yeezus_talks {
+  color: #ff7314;
+}
