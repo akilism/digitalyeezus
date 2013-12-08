@@ -26,8 +26,9 @@ app.get('/yeezusTalks', function (request, response) {
 
 });
 
-var getReply = function (data) {
-  var yeezyQuotes = [
+var confession = function (socket) {
+    var REPLY_SPEED = 3000;
+    var yeezyQuotes = [
       'No sins as long as there’s permission',
       'It’s something that the pastor don’t preach',
       'I need a slow motion video right now',
@@ -121,17 +122,54 @@ var getReply = function (data) {
       'It’s kinda crazy that’s all considered the same thing.',
       'Who knew I’d have to look at you through a glass?'
   ];
+    var userData;
+    var timeoutID;
 
-   return yeezyQuotes[Math.floor(Math.random()*yeezyQuotes.length)];
+
+    var fetchQuote = function () {
+      console.log(yeezyQuotes[Math.floor(Math.random()*yeezyQuotes.length)]);
+      return yeezyQuotes[Math.floor(Math.random()*yeezyQuotes.length)];
+    };
+
+    var emit = function () {
+        console.log('socket:  ' + socket);
+        socket.emit('yeezy', { reply: fetchQuote() });
+    };
+
+    var setData = function (data) {
+        //set the count to the default;
+        userData = data;
+    };
+
+    var reply = function () {
+        if (!userData || userData === '')  { console.log('No user data to reply to.'); return; }
+
+        emit();
+
+        if (timeoutID) {
+            clearTimeout(timeoutID);
+            timeoutID = undefined;
+        }
+
+        timeoutID = setTimeout(reply, REPLY_SPEED);
+    };
+
+    return {
+        emit:emit,
+        setData:setData,
+        reply:reply
+    };
 };
 
 io.sockets.on('connection', function (socket) {
     socket.emit('connected', { 'sid': 1012930123});
 
+    var confessional = confession(socket);
+
     socket.on('confess', function (data) {
         console.log(data);
-
-        socket.emit('yeezy', { reply: getReply(data) });
+        confessional.setData(data);
+        confessional.reply();
     });
 
 });
