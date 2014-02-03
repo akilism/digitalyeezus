@@ -1,4 +1,4 @@
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000318}}
+/* line 18, styles.scss */
 html,
 body {
   height: 100%;
@@ -8,14 +8,14 @@ body {
   max-width: 1695px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000326}}
+/* line 26, styles.scss */
 img {
   margin: 0 auto;
   width: 100%;
   text-align: center;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000332}}
+/* line 32, styles.scss */
 h1 {
   position: absolute;
   top: .04%;
@@ -26,7 +26,7 @@ h1 {
   width: 100%;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000342}}
+/* line 42, styles.scss */
 h2 {
   margin: 0 0 0 1rem;
   padding: 0;
@@ -38,7 +38,7 @@ h2 {
   z-index: 2;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000352}}
+/* line 52, styles.scss */
 #wrapper {
   text-align: center;
   background-image: url("/images/d1g174l.png");
@@ -49,9 +49,10 @@ h2 {
   cursor: pointer;
   margin: 0 auto;
   z-index: 5;
+  min-width: 940px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000365}}
+/* line 66, styles.scss */
 #digital_yeezus {
   border: 4px none black;
   border-radius: 50%;
@@ -62,14 +63,14 @@ h2 {
   position: absolute;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000375}}
+/* line 76, styles.scss */
 #banner_yeezus {
   margin: 0 auto;
   width: 100%;
   z-index: 3;
   position: relative;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000380}}
+/* line 81, styles.scss */
 #banner_yeezus div {
   height: 20px;
   width: 20%;
@@ -79,23 +80,23 @@ h2 {
   transition: width .5s;
   -webkit-transform: matrix(1, -0.2, 0, 1, 0, 0);
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000389}}
+/* line 90, styles.scss */
 #banner_yeezus div:hover {
   background-color: #5aff30;
   width: 5%;
   transition: width .5s;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\0000398}}
+/* line 99, styles.scss */
 .confess {
   max-width: 83.5%;
   font-family: 'Mrs Sheppards', cursive;
   font-size: 14em;
   margin: 0;
   position: relative;
-  top: 0.4em;
+  top: 0.6em;
   /*left: 2%;*/
-  margin-left: -5%;
+  min-width: 785px;
   color: white;
   -webkit-text-stroke: 34px rgba(0, 21, 255, 0.89);
   -webkit-transform: rotate(-15deg);
@@ -112,7 +113,7 @@ h2 {
   z-index: 4;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003123}}
+/* line 125, styles.scss */
 .confess:hover {
   color: #fff800;
   /*-webkit-text-stroke: 34px #fff;*/
@@ -122,7 +123,7 @@ h2 {
   /*text-stroke: 34px #fff;*/
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003133}}
+/* line 135, styles.scss */
 .second {
   -webkit-text-stroke: 0;
   -moz-text-stroke: 0;
@@ -132,7 +133,7 @@ h2 {
   position: absolute;
   display: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003142}}
+/* line 144, styles.scss */
 .second:hover {
   -webkit-text-stroke: 0;
   -moz-text-stroke: 0;
@@ -141,14 +142,14 @@ h2 {
   text-stroke: 0;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003151}}
+/* line 153, styles.scss */
 #banners_and_junk {
   overflow: hidden;
   height: 100%;
   width: 100%;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003157}}
+/* line 159, styles.scss */
 .confessional {
   height: 480px;
   width: 640px;
@@ -166,7 +167,7 @@ h2 {
   z-index: 5;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003174}}
+/* line 176, styles.scss */
 .confession {
   height: 435px;
   width: 621px;
@@ -178,7 +179,7 @@ h2 {
   overflow: hidden;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003186}}
+/* line 188, styles.scss */
 .confession-input {
   display: block;
   position: absolute;
@@ -194,12 +195,12 @@ h2 {
   color: #92ff2c;
   padding: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003197}}
+/* line 199, styles.scss */
 .confession-input:focus {
   outline: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003203}}
+/* line 205, styles.scss */
 input[type='button'],
 input[type='submit'] {
   margin-top: 5px;
@@ -211,13 +212,13 @@ input[type='submit'] {
   padding: 7px;
   display: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003212}}
+/* line 214, styles.scss */
 input[type='button']:focus,
 input[type='submit']:focus {
   outline: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003219}}
+/* line 221, styles.scss */
 .yeezus_talks,
 .user_talks {
   font-size: 0.875em;
@@ -227,7 +228,7 @@ input[type='submit']:focus {
   color: #92ff2c;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/akil\.harris\/repos\/digitalyeezus\/app\/styles\/styles\.scss}line{font-family:\00003223}}
+/* line 225, styles.scss */
 .yeezus_talks {
   color: #ff7314;
 }

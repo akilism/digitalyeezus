@@ -1,7 +1,10 @@
 {
   "name": "digitalyeezus",
-  "version": "0.0.0",
-  "dependencies": {},
+  "version": "0.1.0",
+  "dependencies": {
+    "express": "~3.4.8",
+    "socket.io": "~0.9.16"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
@@ -29,5 +32,9 @@
   },
   "engines": {
     "node": ">=0.8.0"
+  },
+  "subdomain": "digitalyeezus",
+  "scripts": {
+    "start": "node yeezus.js"
   }
 }

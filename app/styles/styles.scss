@@ -59,6 +59,7 @@ h2 {
   cursor: pointer;
   margin: 0 auto;
   z-index: 5;
+  min-width: 940px;
 
 }
 
@@ -101,9 +102,10 @@ h2 {
   font-size: 14em;
   margin: 0;
   position: relative;
-  top: 0.4em;
+  top: 0.6em;
   /*left: 2%;*/
-  margin-left: -5%;
+//  margin-left: -5%;
+  min-width: 785px;
   color: $confess_reverse;
   -webkit-text-stroke: 34px $confess_stroke;
   -webkit-transform: rotate(-15deg);
