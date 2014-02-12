@@ -40,9 +40,9 @@ if (env_mode === 'production') {
 
 
 var confession = function (socket) {
-  var REPLY_SPEED = 6000;
+  var REPLY_SPEED = 15000;
   var replyCount = 0;
-  var replyLimit = 3;
+  var replyLimit = 1;
   var messageCount = 0;
   var yeezyQuotes = [
     'No sins as long as there’s permission',
