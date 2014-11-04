@@ -184,28 +184,33 @@ def savelyriclist(slist):
     print("done building: " + DATA_PATH + "slist.json")
 
 
+def getslist():
+    filename = 'slist.json'
+    with open(DATA_PATH + filename) as f:
+            jsoncontents = json.load(f)
+    return jsoncontents
+
 def builddatafiles():
-    rawfiles = getrawfiles()
-    sentences = flatmap(tokenize, rawfiles)
+    # rawfiles = getrawfiles()
+    # sentences = flatmap(tokenize, rawfiles)
+    sentences = getslist()
     words, slist = buildworddata(sentences)
     yeezusDict = groupwords(words, {})
     savelyriclist(slist)
     savelyricwords(yeezusDict)
 
 
-# builddatafiles()
-
 class YeezusResponder():
 
     def __init__(self):
-        self.words = self.getfile('lyrics_words.json')
-        self.slist = self.getfile('slist.json')
+        self.words = dict(self.getfile('lyrics_words.json'))
+        self.slist = list(self.getfile('slist.json'))
         self.speciallines = [16, 175, 1164, 1208, 3625, 3813, 5180, 2149, 2164, 398, 871, 640, 614, 187, 4, 528, 529, 530, 531, 532, 2887, 2888, 2889, 2890, 2891, 2892, 4100, 4101, 4102, 4103, 4104, 4105, 4106, 4107, 4108, 4109, 4110, 4111, 4112, 4113, 4114, 4115, 4116, 4117, 4118, 4119, 4120, 1441, 1315, 1283, 1103, 876, 827]
         self.veryspeciallines = [771, 673, 6013, 3489, 412, 364, 324, 297, 685, 697, 1464, 1209]
         self.veryspecial = [self.getline(linenumber) for linenumber in self.veryspeciallines]
         self.special = [self.getline(linenumber) for linenumber in self.speciallines]
-        pprint.pprint(self.special)
-        pprint.pprint(self.veryspecial)
+        # pprint.pprint(self.special)
+        # pprint.pprint(self.veryspecial)
 
     def getfile(self, filename):
         with open(DATA_PATH + filename) as f:
@@ -218,11 +223,30 @@ class YeezusResponder():
         text = nltk.Text(tokens)
         pos = nltk.pos_tag(text)
         filtered_pos = [p for p in pos if p[1].startswith("VB") or p[1].startswith("NN") or p[1].startswith("RB")]
-        output_synsets = itertools.imap(synsetbuilder, filtered_pos)
+        output_synsets = itertools.imap(self.synsetbuilder, filtered_pos)
         # for outputset in output_synsets:
         #     word, synset = outputset
         #     print(word + " => " + " ".join(synset))
         return output_synsets
+
+    def lemmagetter(self, synset):
+        return synset.lemma_names()
+
+
+    def getpos(self, pos):
+        if pos.startswith("N"):
+            return wn.NOUN
+        elif pos.startswith("R"):
+            return wn.ADV
+        else:
+            return wn.VERB
+
+
+    def synsetbuilder(self, wordpair):
+        word = wordpair[0]
+        pos = self.getpos(wordpair[1])
+        synsets = set(flatmap(self.lemmagetter, wn.synsets(word, pos=pos)))
+        return ( word, pos, synsets )
 
     '''
         Go through the steps to build a reply.
@@ -230,14 +254,29 @@ class YeezusResponder():
     def buildreply(self, message):
         message_synsets = self.getmessagesynsets(message)
         lines = self.buildlines(message_synsets)
+        # print(lines)
         line_counts = self.linecount(lines)
-        lyrics = self.getlyrics(line_counts)
-        lyricslen = sum(1 for _ in lyrics)
-        if lyricslen < 1:
+        # print(line_counts)
+        lyrics = list(self.getlyrics(line_counts))
+        # print(lyrics)
+        if len(lyrics) < 1:
             lyrics = self.getspeciallyrics()
-        print(lyrics)
+
+        if self.addveryspecial():
+            lyrics += self.veryspecial
+
         lyric = self.randomlyric([lyric for lyric in lyrics if lyric])
         return lyric
+
+    '''
+        test to add in very special lines.
+    '''
+    def addveryspecial(self):
+        choices = [1 for _ in xrange(99)]
+        choices.append(0)
+        random.seed()
+        return random.choice(choices) == 0
+
 
     '''
         Fetch a random return lyric
@@ -245,12 +284,16 @@ class YeezusResponder():
     def randomlyric(self, lyrics):
         l = len(lyrics)
         random.seed()
-        return lyrics[random.randrange(l-1)]
+        if l == 1:
+            return lyrics[0]
+        else:
+            return lyrics[random.randrange(l-1)]
 
     '''
         Return a list of lyrics for every valid word in message.
     '''
     def getlyrics(self, line_counts):
+        print(line_counts)
         return flatmap(self.getwordlyrics, line_counts.items())
 
     '''
@@ -268,12 +311,13 @@ class YeezusResponder():
         counts = wvals.values()
         wmax = max(counts)
         wmin = min(counts)
+        pprint.pprint((wmax, wmin, wmax-wmin))
         if wmax - wmin >= 4:
-            return [self.getline(linenumber) for linenumber, count in wvals.items() if count >= wmax - 2 ] + self.veryspecial
+            return [self.getline(linenumber) for linenumber, count in wvals.items() if count >= wmax - 2 ]
         elif wmax - wmin >= 2:
-            return [self.getline(linenumber) for linenumber, count in wvals.items() if count >= wmax - 1 ] + self.veryspecial
+            return [self.getline(linenumber) for linenumber, count in wvals.items() if count >= wmax - 1 ]
         else:
-            return [self.getline(linenumber) for linenumber, count in wvals.items() if count == wmax] + self.veryspecial
+            return [self.getline(linenumber) for linenumber, count in wvals.items() if count == wmax]
 
     def getline(self, linenumber):
         lyric = self.slist[linenumber]
@@ -292,13 +336,14 @@ class YeezusResponder():
             w_key = word + "::" + pos
             if w_key in self.words:
                 lines[w_key] = self.words[w_key]["lines"]
-                # print(self.words[w_key])
             for w in synset:
                 if "_" not in w:
                     s_key = w + "::" + pos
                     if s_key in self.words:
-                        lines[w_key] += self.words[s_key]["lines"]
-                        # print(self.words[s_key])
+                        if w_key in lines.keys():
+                            lines[w_key] += self.words[s_key]["lines"]
+                        else:
+                            lines[w_key] = self.words[s_key]["lines"]
             if w_key in lines.keys():
                 lines[w_key] = sorted(lines[w_key])
         return lines
@@ -334,11 +379,12 @@ class YeezusResponder():
 
 
 def main():
+    # builddatafiles()
     yr = YeezusResponder()
     while 1:
-        input = raw_input(": ")
+        input = raw_input("=> : ")
         reply = yr.buildreply(input)
-        print(reply[1])
+        print("<= y :" + reply)
 
 
 if __name__ == "__main__":
