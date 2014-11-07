@@ -219,7 +219,7 @@ var updateConfessional = function (data, isYeezus) {
 var getResponse = function (message) {
   $.ajax({
     type: 'POST',
-    url: 'http://127.0.0.1:9000/yeezus',
+    url: '/yeezus',
     data: { message: message }
   })
   .done(function (reply) {
