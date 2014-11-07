@@ -216,16 +216,27 @@ var updateConfessional = function (data, isYeezus) {
   confession.scrollTop(confession[0].scrollHeight);
 };
 
+var getResponse = function (message) {
+  $.ajax({
+    type: 'POST',
+    url: 'http://127.0.0.1:9000/yeezus',
+    data: { message: message }
+  })
+  .done(function (reply) {
+    updateConfessional(reply.reply, true);
+  });
+};
+
 var confess = function () {
   var confessionInput =$('#confession_input');
   var message = confessionInput.val();
-  socket.emit('confess', { my: message });
+  getResponse(message);
   confessionInput.val('');
   updateConfessional(message, false);
 };
 
 var knock = function (count) {
-  socket.emit('knock', { times: count });
+  getResponse('hello');
 };
 
 var seeIfYeezusIsIn = function () {
@@ -234,16 +245,3 @@ var seeIfYeezusIsIn = function () {
     knock(1);
   }, 5000);
 };
-
-
-/* socket.io setup */
-var socket = io.connect();
-socket.on('yeezy', function (data) {
-  updateConfessional(data.reply, true);
-});
-
-socket.on('connected', function (data) {
-  var sid = data.sid;
-  console.log('session id: ' + sid);
-});
-/* end socket.io setup */

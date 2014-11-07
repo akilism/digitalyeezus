@@ -1,15 +1,16 @@
+'use strict';
+
 /**
  * Created by akil.harris on 12/4/13.
  */
 
 var port = process.env.PORT || 8088;
 var env_mode = process.env.NODE_ENV || 'dev';
-var express = require('express');
+var express = require('express'),
+  request = require('request'),
+  url = require('url');
 var app = express();
-var url = require('url');
-//var NA = require("nodealytics");
 var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
 
 console.log(env_mode);
 /**********************
@@ -19,13 +20,15 @@ console.log(env_mode);
 if (env_mode === 'dev') {
   app.use(express.static(__dirname + '/app'));
   app.use(express.static(__dirname + '/.tmp'));
+  app.use(express.json());
+  app.use(express.urlencoded());
   app.use(app.router);
   app.get('/', function (request, response) {
     //    console.log(__dirname + '/app/index.html');
     response.sendfile(__dirname + '/app/index.html');
   });
-  app.get('/yeezusTalks', function (request, response) {
-
+  app.post('/yeezus', function (request, response) {
+    handlePost(request, response);
   });
 }
 
@@ -36,183 +39,35 @@ if (env_mode === 'production') {
   app.get('/', function (request, response) {
     response.sendfile(__dirname + '/dist/index.html');
   });
+  app.post('/yeezus', function (request, response) {
+    handlePost(request, response);
+  });
 }
 
-
-var confession = function (socket) {
-  var REPLY_SPEED = 15000;
-  var replyCount = 0;
-  var replyLimit = 1;
-  var messageCount = 0;
-  var yeezyQuotes = [
-    'No sins as long as there’s permission',
-    'It’s something that the pastor don’t preach',
-    'I need a slow motion video right now',
-    'Zero Zero Zero Zero, a whole lot of 0\'s',
-    'Too close, you comatose so dope you overdose',
-    'nigga you ain\'t up on this',
-    'Ooh they so sensitive',
-    'Did strippers not make an ark when I made it rain?',
-    'It seems we living the American dream',
-    'We shine because they hate us, floss cause they degrade us',
-    'I say fuck the police, that\'s how I treat \'em',
-    'act ballerific like it\'s all terrific',
-    'Mayonnaise-colored Benz, I push miracle whips.',
-    'My momma used to say only Jesus can save us',
-    'Welcome to Sunday service if you hope to someday serve us',
-    'Somebody ordered pancakes, I just sip the sizzurp',
-    'Make music that\'s fire, spit my soul through the wire',
-    'It\'s only two places you end up either dead or in jail',
-    'Cause on judgment day, you gon\' blame me',
-    'Look, you need to crawl \'fore you ball',
-    'If my manager insults me again I will be assaulting him',
-    'You are about to experience something so cold, man',
-    'Cause ain\'t no tuition for having no ambition',
-    'And ain\'t no loans for sitting your ass at home',
-    'You know the kids gonna act a fool',
-    'I\'m doing pretty good as far as geniuses go',
-    'My face always looking like somebody stinks.',
-    'I guess I should\'ve forgot where I came from',
-    'Ooh they so sensitive',
-    'Don\'t ever fix your lips like collagen',
-    'Did strippers not make an ark when I made it rain?',
-    'Aww man, you sold your soul',
-    'They say I was the abomination of Obama’s nation',
-    'Yeah I\'m talking business, we talking CIA',
-    'If you fall on the concrete, that\'s your ass fault',
-    'Let me know if it\'s a problem then, aight man, holla then',
-    'Must be the pharaohs, he in tune with his soul',
-    'And what I do, act more stupidly',
-    'I had a dream I could buy my way to heaven',
-    'Ooh they so sensitive',
-    'So I parallel double parked that motherfucker sideways',
-    'I know Spike Lee gone kill me but let me finish',
-    'Speedboat swerve, homie watch out for the waves',
-    'I told God I\'d be back in a second',
-    'She don\'t believe in shooting stars',
-    'To whom much is given, much is tested',
-    'So if the devil wear Prada, Adam Eve wear nada',
-    'But I been talking to God for so long. That if you look at my life I guess he\'s talking back',
-    'You more like "love to start shit"',
-    'This is my life homie, you decide yours',
-    'When they reminisce over you, my God',
-    'Straight from the page of your favorite author',
-    'But I was good with the Yay as a wholesaler',
-    'Have you ever popped champagne on a plane, while gettin some brain',
-    'I go for mine, I gots to shine',
-    'These Yeezys jumped over the Jumpman',
-    'Ask any dope boy you know, they admire \'Ye',
-    'Ooh they so sensitive',
-    'Went from most hated to the champion god flow',
-    'Yo it\'s gots to be cause I\'m seasoned',
-    'She stopped drinking Diet Coke. She on that coke diet.',
-    'Goin\' H·A·M in Ibiza done took a toll on us',
-    'We hardly talk, I was doing my thang',
-    'Aww man, you sold your soul',
-    'Since Prince was on Apollonia',
-    'Havin money\'s not everything not havin it is',
-    'Did strippers not make an ark when I made it rain?',
-    'I\'m trying to stab two like Jack the Tripper.',
-    'Ooh they so sensitive',
-    'Since O.J. had Isotoners',
-    'That’s Dior Homme, not “Dior, homie”',
-    'Why I only got a problem when you in the hood',
-    'I guess every superhero need his theme music.',
-    'Shit, they say the best things in life are free',
-    'That’s the way I need Jesus.',
-    'Something’s wrong, I hold my head',
-    'I\'m like the fly Malcolm X, buy any jeans necessary',
-    'Got a light-skinned friend look like Michael Jackson',
-    'Went from most hated to the champion god flow',
-    'Who knew that life would move this fast?',
-    'Too many Urkels on your team, that’s why your wins low.',
-    'Ooh they so sensitive',
-    'Did strippers not make an ark when I made it rain?',
-    'They ain’t see me \'cause I pulled up in my other Benz',
-    'You love me for me...could you be more phony?',
-    'You know how long I been on ya',
-    'Cause we can\'t get along, no resolution',
-    'Got a dark-skinned friend look like Michael Jackson.',
-    'Ooh they so sensitive',
-    'Why yes...But I prefer the term \'African-American Express.\'',
-    'It’s kinda crazy that’s all considered the same thing.',
-    'Who knew I’d have to look at you through a glass?'
-  ];
-  var userData;
-  var timeoutID;
-
-
-  var fetchQuote = function () {
-    console.log(yeezyQuotes[Math.floor(Math.random()*yeezyQuotes.length)]);
-    return yeezyQuotes[Math.floor(Math.random()*yeezyQuotes.length)];
+var handlePost = function (req, res) {
+  var message = req.query.message;
+  var send = function (reply) {
+    res.json({'reply': reply});
   };
 
-  var emit = function () {
-    //console.log('socket:  ' + socket);
-    var args = Array.prototype.splice.call(arguments, 0);
-
-    if(args[0]) {
-      socket.emit('yeezy', {reply: args[0] });
-    } else {
-      socket.emit('yeezy', { reply: fetchQuote() });
-    }
-  };
-
-  var setData = function (data) {
-    //set the count to the default;
-    userData = data;
-  };
-
-  var reply = function () {
-    if (!userData || userData === '')  { console.log('No user data to reply to.'); return; }
-
-    if (replyCount === replyLimit) {
-      emit('Let me know if it\'s a problem then, aight man, holla then');
-
-      if (timeoutID) {
-        clearTimeout(timeoutID);
-        timeoutID = undefined;
-      }
-
-      return;
-    }
-
-    replyCount++;
-    emit();
-
-    if (timeoutID) {
-      clearTimeout(timeoutID);
-      timeoutID = undefined;
-    }
-
-    timeoutID = setTimeout(reply, REPLY_SPEED);
-  };
-
-  var resetCount = function () {
-    replyCount = 0;
-  }
-
-  return {
-    emit: emit,
-    setData: setData,
-    reply: reply,
-    resetCount: resetCount
-  };
+  getReply(message, send);
 };
 
-io.sockets.on('connection', function (socket) {
-  socket.emit('connected', { 'sid': 1012930123});
+var getReply = function (message, cb) {
+  var postvals = {
+    'message': message
+  };
 
-  var confessional = confession(socket);
-
-  socket.on('confess', function (data) {
-    console.log(data);
-    confessional.setData(data);
-    confessional.resetCount();
-    confessional.reply();
-  });
-
-});
+  request.post('http://ec2-54-191-116-132.us-west-2.compute.amazonaws.com:8088/yeezus',
+    { form: postvals },
+    function (error, response, body) {
+      if (error) { console.log(error); }
+      if (!error && response.statusCode === 200) {
+        console.log(JSON.parse(body).reply);
+        cb(JSON.parse(body).reply);
+      }
+    });
+};
 
 
 server.listen(port);

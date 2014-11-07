@@ -7,6 +7,8 @@ import os
 import itertools
 import json
 import random
+import copy
+import urllib2
 
 RAW_DATA_PATH = "/Users/akilharris/projects/yeezylyrics/lyrics/"
 DATA_PATH = "./data/"
@@ -83,17 +85,14 @@ def synsetbuilder(wordpair):
 #         print(word + " => " + " ".join(synset))
 #     return output
 
-
 def cleanstopwords(input):
     output = input
     for stopword in STOP_WORDS2:
         output = output.replace(stopword.lower(), " ")
     return output
 
-
 def validpos(pos):
     return pos.startswith("VB") or pos.startswith("NN") or pos.startswith("RB")
-
 
 def makeentry(word, i, issyn):
     return {
@@ -103,14 +102,12 @@ def makeentry(word, i, issyn):
         'syn': issyn
     }
 
-
 def getsynsets(worddata):
     word = worddata['word']
     pos = worddata['pos']
     line = worddata['line']
     synsets = set(flatmap(lemmagetter, wn.synsets(word, pos=pos)))
     return [makeentry((synword, pos), line, True) for synword in synsets if "_" not in synword]
-
 
 def groupwords(words, group):
     for word in words:
@@ -142,13 +139,11 @@ def groupwords(words, group):
                     group[synkey]['lines'].add(syn['line'])
     return group
 
-
 def getrawfiles():
     rawfiles = []
     for file_name in itertools.islice(getAllYeezus(), 0, 400):
         rawfiles.append(cleanFile(getFileContents(file_name)))
     return rawfiles
-
 
 def buildworddata(sentences):
     words = []
@@ -163,7 +158,6 @@ def buildworddata(sentences):
             i += 1
     return (words, slist)
 
-
 def savelyricwords(yeezusDict):
     class SetEncoder(json.JSONEncoder):
         def default(self, obj):
@@ -177,12 +171,10 @@ def savelyricwords(yeezusDict):
         f.write(json.dumps(yeezusDict, cls=SetEncoder))
     print("done building: " + DATA_PATH + "lyrics_words.json")
 
-
 def savelyriclist(slist):
     with open(DATA_PATH + 'slist.json', 'w') as f:
         f.write(json.dumps(slist))
     print("done building: " + DATA_PATH + "slist.json")
-
 
 def getslist():
     filename = 'slist.json'
@@ -203,8 +195,10 @@ def builddatafiles():
 class YeezusResponder():
 
     def __init__(self):
-        self.words = dict(self.getfile('lyrics_words.json'))
-        self.slist = list(self.getfile('slist.json'))
+        # self.words = dict(self.getfile('lyrics_words.json'))
+        # self.slist = list(self.getfile('slist.json'))
+        self.words = dict(self.geturl('https://s3-us-west-2.amazonaws.com/yeezusdata/lyrics_words.json'))
+        self.slist = list(self.geturl('https://s3-us-west-2.amazonaws.com/yeezusdata/slist.json'))
         self.speciallines = [16, 175, 1164, 1208, 3625, 3813, 5180, 2149, 2164, 398, 871, 640, 614, 187, 4, 528, 529, 530, 531, 532, 2887, 2888, 2889, 2890, 2891, 2892, 4100, 4101, 4102, 4103, 4104, 4105, 4106, 4107, 4108, 4109, 4110, 4111, 4112, 4113, 4114, 4115, 4116, 4117, 4118, 4119, 4120, 1441, 1315, 1283, 1103, 876, 827]
         self.veryspeciallines = [771, 673, 6013, 3489, 412, 364, 324, 297, 685, 697, 1464, 1209]
         self.veryspecial = [self.getline(linenumber) for linenumber in self.veryspeciallines]
@@ -212,13 +206,25 @@ class YeezusResponder():
         # pprint.pprint(self.special)
         # pprint.pprint(self.veryspecial)
 
+    def geturl(self, url):
+        u =  urllib2.urlopen(url)
+        jsoncontents = json.load(u)
+        return jsoncontents
+
     def getfile(self, filename):
         with open(DATA_PATH + filename) as f:
             jsoncontents = json.load(f)
         return jsoncontents
 
+    def cleanstopwords(self, input):
+        output = input
+        for stopword in STOP_WORDS:
+            output = output.replace(stopword.lower(), " ")
+        return output
+
+
     def getmessagesynsets(self, message):
-        output = cleanstopwords(message.lower())
+        output = self.cleanstopwords(message.lower())
         tokens = nltk.word_tokenize(output)
         text = nltk.Text(tokens)
         pos = nltk.pos_tag(text)
@@ -251,7 +257,8 @@ class YeezusResponder():
     '''
         Go through the steps to build a reply.
     '''
-    def buildreply(self, message):
+    def buildreply(self, input):
+        message = re.sub(r"[^a-z0-9 ]", "", input)
         message_synsets = self.getmessagesynsets(message)
         lines = self.buildlines(message_synsets)
         # print(lines)
@@ -293,7 +300,7 @@ class YeezusResponder():
         Return a list of lyrics for every valid word in message.
     '''
     def getlyrics(self, line_counts):
-        print(line_counts)
+        # print(line_counts)
         return flatmap(self.getwordlyrics, line_counts.items())
 
     '''
@@ -311,7 +318,7 @@ class YeezusResponder():
         counts = wvals.values()
         wmax = max(counts)
         wmin = min(counts)
-        pprint.pprint((wmax, wmin, wmax-wmin))
+        # pprint.pprint((wmax, wmin, wmax-wmin))
         if wmax - wmin >= 4:
             return [self.getline(linenumber) for linenumber, count in wvals.items() if count >= wmax - 2 ]
         elif wmax - wmin >= 2:
@@ -331,11 +338,12 @@ class YeezusResponder():
     '''
     def buildlines(self, message_synsets):
         lines = {}
+
         for s in message_synsets:
             word, pos, synset = s
             w_key = word + "::" + pos
             if w_key in self.words:
-                lines[w_key] = self.words[w_key]["lines"]
+                lines[w_key] = copy.deepcopy(self.words[w_key]["lines"])
             for w in synset:
                 if "_" not in w:
                     s_key = w + "::" + pos
@@ -343,7 +351,7 @@ class YeezusResponder():
                         if w_key in lines.keys():
                             lines[w_key] += self.words[s_key]["lines"]
                         else:
-                            lines[w_key] = self.words[s_key]["lines"]
+                            lines[w_key] = copy.deepcopy(self.words[s_key]["lines"])
             if w_key in lines.keys():
                 lines[w_key] = sorted(lines[w_key])
         return lines
@@ -384,7 +392,7 @@ def main():
     while 1:
         input = raw_input("=> : ")
         reply = yr.buildreply(input)
-        print("<= y :" + reply)
+        print("<= y: " + reply)
 
 
 if __name__ == "__main__":
