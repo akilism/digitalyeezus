@@ -58,8 +58,8 @@ if (env_mode === 'production') {
 <<<<<<< HEAD
 =======
 var handlePost = function (req, res) {
-  var message = req.query.message;
-  console.log(req);
+  var message = req.body.message;
+  console.log(req.body);
   var send = function (reply) {
     res.json({'reply': reply});
   };
