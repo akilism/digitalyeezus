@@ -16,6 +16,7 @@ var app = express();
 var server = require('http').createServer(app);
 
 console.log(env_mode);
+console.log(__dirname);
 /**********************
  **      ROUTES      **
  **********************/
@@ -38,11 +39,11 @@ if (env_mode === 'dev') {
 }
 
 if (env_mode === 'production') {
-  app.use(express.static(__dirname + 'dist'));
+  app.use(express.static(__dirname + '/dist'));
   //app.use(express.static(__dirname + '/.tmp'));
   app.use(app.router);
   app.get('/', function (request, response) {
-    response.sendfile('dist/index.html');
+    response.sendfile('/dist/index.html');
   });
   app.post('/yeezus', function (request, response) {
     handlers.handlePost(request, response);
