@@ -35,6 +35,7 @@
   },
   "subdomain": "digitalyeezus",
   "scripts": {
-    "start": "node yeezus.js"
+    "start": "node yeezus.js",
+    "postinstall": "bower install && grunt build"
   }
 }
