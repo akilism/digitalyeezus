@@ -24,7 +24,6 @@ if (env_mode === 'dev') {
   app.use(express.urlencoded());
   app.use(app.router);
   app.get('/', function (request, response) {
-    //    console.log(__dirname + '/app/index.html');
     response.sendfile(__dirname + '/app/index.html');
   });
   app.post('/yeezus', function (request, response) {
@@ -49,7 +48,7 @@ var handlePost = function (req, res) {
   var send = function (reply) {
     res.json({'reply': reply});
   };
-
+  console.log('message:', message);
   getReply(message, send);
 };
 
@@ -63,7 +62,7 @@ var getReply = function (message, cb) {
     function (error, response, body) {
       if (error) { console.log(error); }
       if (!error && response.statusCode === 200) {
-        console.log(JSON.parse(body).reply);
+        console.log('reply: ', JSON.parse(body).reply);
         cb(JSON.parse(body).reply);
       }
     });
