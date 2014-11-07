@@ -31,7 +31,7 @@
     "jshint-stylish": "~0.1.3"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": "0.10.0"
   },
   "subdomain": "digitalyeezus",
   "scripts": {
