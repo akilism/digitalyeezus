@@ -18,7 +18,7 @@ var server = require('http').createServer(app);
 
 console.log(env_mode);
 console.log(__dirname);
-console.log(process.cdw());
+console.log(process.cwd());
 /**********************
  **      ROUTES      **
  **********************/
