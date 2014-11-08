@@ -242,7 +242,7 @@ var knock = function (count) {
 };
 
 var seeIfYeezusIsIn = function () {
-  setTimeout(function () {
-    knock(1);
-  }, 5000);
+  // setTimeout(function () {
+  //   knock(1);
+  // }, 5000);
 };
