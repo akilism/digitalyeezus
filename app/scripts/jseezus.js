@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Created by akil.harris on 11/21/13.
  */
@@ -30,7 +31,7 @@ var digiYeezusHeadline = function() {
 
 var setRapper = function() {
   var wrapper = $('#wrapper');
-  var confession_input = $('#confession_input');
+  var confessionInput = $('#confession_input');
   wrapper.mousemove(function(e) {
 
     var body = $('body');
@@ -76,13 +77,13 @@ var setRapper = function() {
     }
   });
   $('#submit').click(function () { confess(); });
-  confession_input.keydown(function (e) {
+  confessionInput.keydown(function (e) {
     if (e.which === 13) {
-      var val = confession_input.val();
+      var val = confessionInput.val();
 
       if (val !== '') {
         confess();
-        confession_input.val('');
+        confessionInput.val('');
       } else {
         updateConfessional('Excuse me, was you saying something?', true);
       }
@@ -144,6 +145,9 @@ var fontFlipper = function(element, count) {
 };
 
 var bannerIn = function() {
+  var incFinish = function () {
+    FINISHED_COUNT++;
+  };
 
   for (var i = 0; i < BANNER_COUNT; i++) {
     $('#banner_yeezus').append('<div id="banner_' + i + '"></div>');
@@ -151,9 +155,7 @@ var bannerIn = function() {
     banner.css('height','+=' + 0.25 * i);
     banner.animate({
       top: 200 + (i * 26 - (i * 3)) + 'px'
-    },(100*(i+10)),function () {
-      FINISHED_COUNT++;
-    });
+    },(100*(i+10)), incFinish());
   }
 
   startLoopBanners();
@@ -162,9 +164,9 @@ var bannerIn = function() {
 var displayMenu = function() {
   var $confession = $('#confession');
   if($confession.text().indexOf('Y33ZU5') === -1) {
-    $confession.append('<p class="yeezus_talks">D1G1T4L Y33ZU5 v0.1....I hope this take away from ya sins..</p>');
+    $confession.append('<p class="yeezus_talks">D1G1T4L Y33ZU5...</p>');
   }
-}
+};
 
 var dropout = function() {
   fontFlipper('h2',15);
@@ -211,7 +213,7 @@ var binMe = function(str){
 
 var updateConfessional = function (data, isYeezus) {
   var confession = $('#confession');
-  var newLine = isYeezus ? '<p class="yeezus_talks">' + data + '</p>' : '<p class="user_talks">' + data + '</p>'
+  var newLine = isYeezus ? '<p class="yeezus_talks">' + data + '</p>' : '<p class="user_talks">' + data + '</p>';
   confession.append(newLine);
   confession.scrollTop(confession[0].scrollHeight);
 };
@@ -240,7 +242,6 @@ var knock = function (count) {
 };
 
 var seeIfYeezusIsIn = function () {
-
   setTimeout(function () {
     knock(1);
   }, 5000);
