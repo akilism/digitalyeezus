@@ -2,7 +2,7 @@ digitalyeezus
 =============
 
 Digital Yeezus Site
-in action at [http://digitalyeezus.nodejitsu.com/](http://digitalyeezus.nodejitsu.com/)
+in action at [https://yeezus.herokuapp.com/](https://yeezus.herokuapp.com/)
 
 Some node.js, socket.io, css3 tests. 
 
