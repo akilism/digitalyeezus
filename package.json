@@ -1,9 +1,10 @@
 {
   "name": "digitalyeezus",
-  "version": "1.0",
+  "version": "0.1.0",
   "dependencies": {
     "express": "~3.4.8",
-    "request": "^2.47.0"
+    "request": "^2.47.0",
+    "twit": "~1.1.20"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
