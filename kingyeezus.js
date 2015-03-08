@@ -1,17 +1,21 @@
 'use strict';
 
 var fs = require('fs'),
-  Twit = require('twit');
+  Twit = require('twit'),
+  dotenv = require('dotenv');
+
+dotenv.load();
 
 
 function Yeezus() {
   Yeezus.prototype.kanye = JSON.parse(fs.readFileSync('./data/slist.json', 'UTF-8'));
   this.bVerses = JSON.parse(fs.readFileSync('./data/bible.json', 'UTF-8'));
   this.T = new Twit({
-    consumer_key: 'yt8JrzuVcXaC2bP5v7yIOR5j4',
-    consumer_secret: '8bJqwQvjuHyzBbDBNJlIL2kZlwEpRXWGPLA576pbPsfUscBoG0',
-    access_token: '3045654005-rQlRWr0WjEkJIyVCDO8DZ2UwRRnElYSG4hqOD2S',
-    access_token_secret: 'rMPiPgU1zRLCp4SUvG33hkVSI3zDF0cPzzw4pZvnKEb8Q'});
+    consumer_key: process.env.CONSUMER_KEY,
+    consumer_secret: process.env.CONSUMER_SECRET,
+    access_token: process.env.ACCESS_TOKEN,
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET
+  });
 }
 
 Yeezus.prototype.tweet = function() {
@@ -32,14 +36,22 @@ Yeezus.prototype.cleanVerse = function(verse) {
 
 Yeezus.prototype.newVerse = function(verse) {
   var matchWord = this.getMatchWord(verse);
-  if(!matchWord) { return verse; }
-  var kParts = verse.split(matchWord);
   var bVerse = this.getBibleVerse(matchWord.toLowerCase());
-  var endParts = bVerse.split(matchWord.toLowerCase());
-  var end = endParts.slice(1).join('');
+  var kParts = verse.split(matchWord);
+  var bParts = bVerse.split(matchWord.toLowerCase());
 
-  if(bVerse === '') { return this.getVerse(); }
-  return (kParts[0].trim() +  matchWord + end.trim()); //.replace(/  /g, '');
+  if(!matchWord || bVerse === '' || !kParts[1] || !bParts[1]) { return this.getVerse(); }
+
+  var end = bParts.slice(1).join('').trim();
+  var start = bParts.slice(0,1).join('').trim();
+  start = [start[0].toUpperCase(), start.slice(1)].join('');
+
+
+  if(Math.round(Math.random()) % 2 === 0) { //.replace(/  /g, '');
+    return (start +  matchWord + kParts[1].trim());
+  } else {
+    return (kParts[0].trim() +  matchWord + end);
+  }
 };
 
 Yeezus.prototype.cleanWord = function(word) {

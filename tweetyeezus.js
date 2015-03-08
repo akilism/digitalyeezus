@@ -1,10 +1,20 @@
-var Twit = require('twit');
+var Twit = require('twit'),
+  dotenv = require('dotenv');
+
+dotenv.load();
+
+console.log({
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token: process.env.ACCCESS_TOKEN,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
+});
 
 var T = new Twit({
-  consumer_key: 'yt8JrzuVcXaC2bP5v7yIOR5j4',
-  consumer_secret: '8bJqwQvjuHyzBbDBNJlIL2kZlwEpRXWGPLA576pbPsfUscBoG0',
-  access_token: '3045654005-Uk5F20Wt31B2YF0krR0qXoQHbnLvlRYlxqUrIwS',
-  access_token_secret: 'dulTbDAvniGWFKuh6Csakghe8Sj0y2z97EkQYUjBUQsgF'
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token: process.env.ACCCESS_TOKEN,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
 T.get('statuses/user_timeline', { screen_name: 'kanyewest' },  function (err, data, res) {

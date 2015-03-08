@@ -2,7 +2,10 @@
 
 var request = require('request'),
     fs = require('fs'),
-    Yeezus = require('./kingyeezus.js');
+    Yeezus = require('./kingyeezus.js'),
+    dotenv = require('dotenv');
+
+dotenv.load();
 
 var yeezusBot = new Yeezus();
 
@@ -32,6 +35,6 @@ exports.handlePost = function (req, res) {
 };
 
 exports.sendTweet = function(req, res) {
-  yeezusBot.tweet();
+  if(req.query && req.query.p === process.env.TWEET_WORD) { yeezusBot.tweet(); }
   res.json({'msg': 'Got my niggas in Paris and they going to carry it down to egypt.'});
 };

@@ -8,7 +8,10 @@ var port = process.env.PORT || 8088;
 var env_mode = process.env.NODE_ENV || 'dev';
 var express = require('express'),
     url = require('url'),
-    handlers = require('./handlers.js');
+    handlers = require('./handlers.js'),
+    dotenv = require('dotenv');
+
+dotenv.load();
 var app = express();
 var server = require('http').createServer(app);
 
