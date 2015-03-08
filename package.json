@@ -2,8 +2,10 @@
   "name": "digitalyeezus",
   "version": "1.1.3",
   "dependencies": {
+    "dotenv": "^0.5.1",
     "express": "~3.4.8",
-    "request": "^2.47.0"
+    "request": "^2.47.0",
+    "twit": "^1.1.20"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

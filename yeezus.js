@@ -55,8 +55,7 @@ if (env_mode === 'production') {
   });
 }
 
-<<<<<<< HEAD
-=======
+
 var handlePost = function (req, res) {
   var message = req.body.message;
   console.log(req.body);
@@ -84,6 +83,6 @@ var getReply = function (message, cb) {
 };
 
 
->>>>>>> jquery fix
+
 server.listen(port);
 console.log('Listening on port ' + port + '.');
