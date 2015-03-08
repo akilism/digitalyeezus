@@ -7,10 +7,12 @@
 var port = process.env.PORT || 8088;
 var env_mode = process.env.NODE_ENV || 'dev';
 env_mode = 'dev';
+
 var express = require('express'),
     url = require('url'),
-    handlers = require('./handlers.js'),
-    dotenv = require('dotenv');
+    request = require('request'),
+    dotenv = require('dotenv'),
+    handlers = require('./handlers.js');
 
 dotenv.load();
 var app = express();
