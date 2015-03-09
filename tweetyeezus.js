@@ -26,13 +26,12 @@ var mentionBot = (function() {
   };
 
   var postReply = function(isRepliedTo, tweetId, reply, username) {
-    var that = this;
     return new Promise(function(resolve, reject) {
       if(isRepliedTo) { resolve(false); }
 
       var message = (username + ' ' + reply).slice(0,140);
 
-      that.T.post('statuses/update', { status: message, in_reply_to_status_id: tweetId }, function(err, data, res) {
+      T.post('statuses/update', { status: message, in_reply_to_status_id: tweetId }, function(err, data, res) {
         if(err) { reject(err); }
         else { resolve(true); }
       });
