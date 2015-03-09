@@ -29,7 +29,7 @@ var mentionBot = (function() {
     return new Promise(function(resolve, reject) {
       if(isRepliedTo) { resolve(false); }
 
-      var message = (username + ' ' + reply).slice(0,140);
+      var message = ('.' + username + ' ' + reply).slice(0,140);
 
       T.post('statuses/update', { status: message, in_reply_to_status_id: (tweetId + '') }, function(err, data, res) {
         if(err) { reject(err); }
