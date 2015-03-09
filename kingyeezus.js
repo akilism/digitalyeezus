@@ -20,14 +20,12 @@ function Yeezus() {
 
 Yeezus.prototype.tweet = function() {
   var verse = this.getVerse();
-  // var newVerse =
-  console.log('tweet sent:', verse);
 
-  // this.T.post('statuses/update', { status: verse }, function(err, data, res) {
-  //   if(err) { console.log('error sending tweet:', err); return false; }
-  //   console.log('tweet sent:', verse);
-  //   return true;
-  // });
+  this.T.post('statuses/update', { status: verse }, function(err, data, res) {
+    if(err) { console.log('error sending tweet:', err); return false; }
+    console.log('tweet sent:', verse);
+    return true;
+  });
 };
 
 Yeezus.prototype.cleanVerse = function(verse) {

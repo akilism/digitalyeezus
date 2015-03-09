@@ -39,6 +39,9 @@ if (env_mode === 'dev') {
   app.get('/tweet', function (request, response) {
     handlers.sendTweet(request, response);
   });
+  app.get('/reply', function (request, response) {
+    handlers.reply(request, response);
+  });
 }
 
 if (env_mode === 'production') {
@@ -57,6 +60,10 @@ if (env_mode === 'production') {
 
   app.get('/tweet', function (request, response) {
     handlers.sendTweet(request, response);
+  });
+
+  app.get('/reply', function (request, response) {
+    handlers.reply(request, response);
   });
 }
 

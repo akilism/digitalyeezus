@@ -3,6 +3,7 @@
 var request = require('request'),
     fs = require('fs'),
     Yeezus = require('./kingyeezus.js'),
+    mentionBot = require('./tweetyeezus.js'),
     dotenv = require('dotenv');
 
 dotenv.load();
@@ -37,4 +38,25 @@ exports.handlePost = function (req, res) {
 exports.sendTweet = function(req, res) {
   if(req.query && req.query.p === process.env.TWEET_WORD) { yeezusBot.tweet(); }
   res.json({'msg': 'Got my niggas in Paris and they going to carry it down to egypt.'});
+};
+
+
+exports.reply = function(req, res) {
+  console.log(req.query);
+  if(!req.query || req.query.p !== process.env.REPLY_WORD) {
+    res.json({'msg': 'Got my niggas in Paris and they going to carry it down to egypt.'});
+    return;
+  }
+
+  var type = req.query.t;
+
+  switch(type) {
+    case process.env.MENTIONS:
+      res.json({'msg': 'Got my niggas in Paris and they going to carry it down to egypt.'});
+      break;
+    case process.env.MINIONS:
+      mentionBot.kanyeMentions();
+      res.json({'msg': 'Got my niggas in Paris and they going to carry it down to egypt.'});
+      break;
+  }
 };

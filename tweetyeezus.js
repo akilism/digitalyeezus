@@ -30,11 +30,11 @@ var mentionBot = (function() {
       if(isRepliedTo) { resolve(false); }
 
       var message = (username + ' ' + reply).slice(0,140);
-      resolve(true);
-      // this.T.post('statuses/update', { status: message, in_reply_to_status_id: tweetId }, function(err, data, res) {
-      //   if(err) { reject(err); }
-      //   else { resolve(true); }
-      // });
+
+      this.T.post('statuses/update', { status: message, in_reply_to_status_id: tweetId }, function(err, data, res) {
+        if(err) { reject(err); }
+        else { resolve(true); }
+      });
     });
   };
 
@@ -88,6 +88,8 @@ var mentionBot = (function() {
   Tweet ID: ${tweet.id}
   User Text: ${tweet.text}`;
       return tweetDetails;
+    }).catch(function(err) {
+      console.log('error:', err);
     });
   };
 
@@ -119,14 +121,15 @@ var mentionBot = (function() {
   };
 
   var kanyeMentions = function() {
-    T.get('search/tweets', {q: '-http -t.co -#NowPlaying @kaynewest', result_type: 'recent', count: 50}, function(err, data, res) {
+    var replyToCount = 10;
+    T.get('search/tweets', {q: '-http -t.co -#NowPlaying @kaynewest', result_type: 'recent', count: 100}, function(err, data, res) {
       if(err) { console.error('error:', err); return; }
       data.statuses.map(function(tweet) {
         var re = /@[a-z0-9_]{1,16}/gi;
         tweet.text_no_mentions = tweet.text.replace(re, '').trim();
         return tweet;
-      }).filter(function(tweet) {
-        return (tweet.text_no_mentions !== '' && tweet.text.indexOf('RT ') === -1 && tweet.text.indexOf('http') === -1);
+      }).filter(function(tweet, i) {
+        return (i < replyToCount && (tweet.text_no_mentions !== '' && tweet.text.indexOf('RT ') === -1 && tweet.text.indexOf('http') === -1));
       }).forEach(function(tweet) {
         var logTweet = logTweetAndResponse.curry(tweet);
         getReply(tweet.text_no_mentions, logTweet).then(function(result) {
@@ -142,5 +145,4 @@ var mentionBot = (function() {
 
 })();
 
-mentionBot.kanyeMentions();
-//module.exports = mentionBot;
+module.exports = mentionBot;
