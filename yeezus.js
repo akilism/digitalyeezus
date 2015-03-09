@@ -42,8 +42,10 @@ if (env_mode === 'dev') {
 }
 
 if (env_mode === 'production') {
-  app.use(express.static(__dirname + '/dist'));
+  app.use(express.static('dist'));
   //app.use(express.static(__dirname + '/.tmp'));
+  app.use(express.json());
+  app.use(express.urlencoded());
   app.use(app.router);
   app.get('/', function (request, response) {
     response.sendfile(__dirname + '/dist/index.html');
