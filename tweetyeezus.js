@@ -29,7 +29,7 @@ var mentionBot = (function() {
     return new Promise(function(resolve, reject) {
       if(isRepliedTo) { resolve(false); }
       else {
-        var message = ('. ' + username + ' ' + reply).slice(0,140);
+        var message = (username + ' ' + reply).slice(0,140);
 
         T.post('statuses/update', { status: message, in_reply_to_status_id: tweetId }, function(err, data, res) {
           if(err) { reject(err); }
@@ -121,7 +121,7 @@ var mentionBot = (function() {
   };
 
   var kanyeMentions = function() {
-    T.get('search/tweets', {q: '-http -t.co -#NowPlaying @kaynewest', result_type: 'recent', count: 15}, function(err, data, res) {
+    T.get('search/tweets', {q: '-http -t.co -#NowPlaying @kaynewest OR "kanye west"', result_type: 'recent', count: 15}, function(err, data, res) {
       if(err) { console.error('error:', err); return; }
       data.statuses.map(function(tweet) {
         var re = /@[a-z0-9_]{1,16}/gi;
