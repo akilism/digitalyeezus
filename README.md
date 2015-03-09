@@ -2,7 +2,7 @@ digitalyeezus
 =============
 
 Digital Yeezus Site
-in action at [https://www.digitalyeezus.com](https://www.digitalyeezus.com/)
+in action at [http://www.digitalyeezus.com](http://www.digitalyeezus.com/)
 
 Messing around with node, python nltk, redis & css3
 
