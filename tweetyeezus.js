@@ -31,7 +31,7 @@ var mentionBot = (function() {
 
       var message = (username + ' ' + reply).slice(0,140);
 
-      T.post('statuses/update', { status: message, in_reply_to_status_id: tweetId }, function(err, data, res) {
+      T.post('statuses/update', { status: message, in_reply_to_status_id: (tweetId + '') }, function(err, data, res) {
         if(err) { reject(err); }
         else { resolve(true); }
       });
@@ -61,7 +61,6 @@ var mentionBot = (function() {
   };
 
   var logTweetAndResponse = function(tweet, reply) {
-    rClient.flushdb();
     var tweetDetails;
     return checkForReply(tweet.id).then(function(isRepliedTo) {
       // console.log('isRepliedTo:', isRepliedTo);
