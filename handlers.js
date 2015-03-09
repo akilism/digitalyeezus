@@ -26,7 +26,7 @@ var getReply = function (message, cb) {
 };
 
 exports.handlePost = function (req, res) {
-  var message = req.query.message;
+  var message = req.body.message;
   var send = function (reply) {
     res.json({'reply': reply});
   };
