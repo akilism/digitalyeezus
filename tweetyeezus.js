@@ -121,7 +121,7 @@ var mentionBot = (function() {
   };
 
   var kanyeMentions = function() {
-    T.get('search/tweets', {q: '-http -t.co -#NowPlaying @kaynewest', result_type: 'recent', count: 10}, function(err, data, res) {
+    T.get('search/tweets', {q: '-http -t.co -#NowPlaying @kaynewest', result_type: 'recent', count: 50}, function(err, data, res) {
       if(err) { console.error('error:', err); return; }
       data.statuses.map(function(tweet) {
         var re = /@[a-z0-9_]{1,16}/gi;
