@@ -47,7 +47,7 @@ var mentionBot = (function() {
           'date': Date.now(),
           'reply': reply,
           'text': tweet.text,
-          'userid': tweet.user.id,
+          'userid': tweet.user.id_str,
           'username': tweet.user.username
         }, function(err, res) {
           if(err) { console.log(err); }
@@ -76,7 +76,7 @@ var mentionBot = (function() {
   ------------------
   New Reply:
   Tweet ID: ${tweet.id_str}
-  User ID: ${tweet.user.id}, Username: ${tweet.user.name}, Screenname: ${tweet.user.screen_name}
+  User ID: ${tweet.user.id_str}, Username: ${tweet.user.name}, Screenname: ${tweet.user.screen_name}
   User Text: ${tweet.text}
   Yeezus Reply: ${reply}`;
         return tweetDetails;
