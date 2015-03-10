@@ -43,7 +43,7 @@ var mentionBot = (function() {
     return new Promise(function(resolve, reject) {
       if(!wasPosted) { resolve(false); }
       else {
-        rClient.hmset(tweet.id, {
+        rClient.hmset(tweet.id_str, {
           'date': Date.now(),
           'reply': reply,
           'text': tweet.text,
@@ -53,7 +53,7 @@ var mentionBot = (function() {
           if(err) { console.log(err); }
         });
 
-        rClient.sadd('repliedTweets', tweet.id, function(err, res) {
+        rClient.sadd('repliedTweets', tweet.id_str, function(err, res) {
           if(err) { reject(err); }
           else { resolve((res === 1)); }
         });
@@ -63,9 +63,9 @@ var mentionBot = (function() {
 
   var logTweetAndResponse = function(tweet, reply) {
     var tweetDetails;
-    return checkForReply(tweet.id).then(function(isRepliedTo) {
+    return checkForReply(tweet.id_str).then(function(isRepliedTo) {
       // console.log('isRepliedTo:', isRepliedTo);
-      return postReply(isRepliedTo, tweet.id, reply, '@'+tweet.user.screen_name);
+      return postReply(isRepliedTo, tweet.id_str, reply, '@'+tweet.user.screen_name);
     }).then(function(wasPosted) {
       // console.log('wasPosted:', wasPosted);
       return saveToDataStore(wasPosted, tweet, reply);
@@ -75,7 +75,7 @@ var mentionBot = (function() {
         tweetDetails = `
   ------------------
   New Reply:
-  Tweet ID: ${tweet.id}
+  Tweet ID: ${tweet.id_str}
   User ID: ${tweet.user.id}, Username: ${tweet.user.name}, Screenname: ${tweet.user.screen_name}
   User Text: ${tweet.text}
   Yeezus Reply: ${reply}`;
@@ -85,7 +85,7 @@ var mentionBot = (function() {
       tweetDetails = `
   ------------------
   Previously replied to:
-  Tweet ID: ${tweet.id}
+  Tweet ID: ${tweet.id_str}
   User Text: ${tweet.text}`;
       return tweetDetails;
     }).catch(function(err) {
@@ -121,7 +121,7 @@ var mentionBot = (function() {
   };
 
   var kanyeMentions = function() {
-    T.get('search/tweets', {q: '-http -t.co -#NowPlaying @kaynewest OR "kanye west"', result_type: 'recent', count: 15}, function(err, data, res) {
+    T.get('search/tweets', {q: '-http -t.co -#NowPlaying @kaynewest', result_type: 'recent', count: 10}, function(err, data, res) {
       if(err) { console.error('error:', err); return; }
       data.statuses.map(function(tweet) {
         var re = /@[a-z0-9_]{1,16}/gi;
