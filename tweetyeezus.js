@@ -141,7 +141,7 @@ var mentionBot = (function() {
   var y33zusMentions = function() {
     T.get('statuses/mentions_timeline', {count: 100}, function(err, data, res) {
       if(err) { console.error('error:', err); return; }
-      data.statuses.map(function(tweet) {
+      data.map(function(tweet) {
         var re = /@[a-z0-9_]{1,16}/gi;
         tweet.text_no_mentions = tweet.text.replace(re, '').trim();
         return tweet;
