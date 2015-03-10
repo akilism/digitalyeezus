@@ -52,6 +52,7 @@ exports.reply = function(req, res) {
 
   switch(type) {
     case process.env.MENTIONS:
+      mentionBot.y33zusMentions();
       res.json({'msg': 'Got my niggas in Paris and they going to carry it down to egypt.'});
       break;
     case process.env.MINIONS:
