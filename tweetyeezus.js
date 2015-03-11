@@ -3,6 +3,7 @@
 var Twit = require('twit'),
   request = require('request'),
   dotenv = require('dotenv'),
+  _ = require('highland'),
   redis = require('redis'),
   rClient = redis.createClient();
 
@@ -107,8 +108,9 @@ var mentionBot = (function() {
       'message': message
     };
 
+    //aws http://ec2-54-191-116-132.us-west-2.compute.amazonaws.com:8088/yeezus
     return new Promise(function(resolve, reject) {
-      request.post('http://ec2-54-191-116-132.us-west-2.compute.amazonaws.com:8088/yeezus',
+      request.post('http://digitalyeezus.com:8888/yeezus',
       { form: postvals },
       function (error, response, body) {
         if (error) { reject(error); }
@@ -172,11 +174,67 @@ var mentionBot = (function() {
     });
   };
 
+
+  var streamKanye = function() {
+    var stream = T.stream('statuses/filter', { track: 'kanye west', language: 'en' });
+    var tweets = _('tweet', stream).map(function(tweet){
+      var re = /@[a-z0-9_]{1,16}/gi;
+      tweet.text_no_mentions = tweet.text.replace(re, '').trim();
+      return tweet;
+    })
+    .filter(function(tweet) {
+      if(tweet.text_no_mentions === '') { return false; }
+
+      var re = /https{0,1}:/gi;
+      var re1 = /#nowplaying/gi;
+      var re2 = /#np/gi;
+      var re3 = /dailyvideo/gi;
+
+      var result = re.exec(tweet.text);
+      if (result) { return false; }
+
+      result = re1.exec(tweet.text);
+      if (result) { return false; }
+
+      result = re2.exec(tweet.text);
+      if (result) { return false; }
+
+      result = re3.exec(tweet.text);
+      if (result) { return false; }
+
+      return true;
+    });
+
+
+
+    tweets.each(function(tweet) {
+      // var logTweet = logTweetAndResponse.curry(tweet);
+      // getReply(tweet.text_no_mentions, logTweet).then(function(result) {
+      //   console.log(result);
+      // });
+
+      getReply(tweet.text_no_mentions, console.log);
+  //     var tweetDetails = `
+  // ------------------
+  // Tweet ID: ${tweet.id_str}
+  // User ID: ${tweet.user.id_str}, Username: ${tweet.user.name}, Screenname: ${tweet.user.screen_name}
+  // User Text: ${tweet.text}`;
+  //     console.log(tweetDetails);
+    });
+
+    // stream.on('tweet', function (tweet) {
+    //   console.log(tweet.id_str);
+    // });
+  };
+
   return {
     kanyeMentions:kanyeMentions,
-    y33zusMentions:y33zusMentions
+    y33zusMentions:y33zusMentions,
+    streamKanye:streamKanye
   };
 
 })();
 
+
+mentionBot.streamKanye();
 module.exports = mentionBot;
