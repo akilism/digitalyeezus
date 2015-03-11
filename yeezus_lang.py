@@ -266,7 +266,7 @@ class YeezusResponder():
         # print(line_counts)
         lyrics = list(self.getlyrics(line_counts))
         # print(lyrics)
-        if len(lyrics) < 1:
+        if len(lyrics) < 2:
             lyrics = self.getspeciallyrics()
 
         if self.addveryspecial():
@@ -281,7 +281,7 @@ class YeezusResponder():
     def addveryspecial(self):
         choices = [1 for _ in xrange(99)]
         choices.append(0)
-        random.seed()
+        # random.seed()
         return random.choice(choices) == 0
 
 
@@ -290,7 +290,7 @@ class YeezusResponder():
     '''
     def randomlyric(self, lyrics):
         l = len(lyrics)
-        random.seed()
+        # random.seed()
         if l == 1:
             return lyrics[0]
         else:
