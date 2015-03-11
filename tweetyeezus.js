@@ -83,11 +83,12 @@ var mentionBot = (function() {
         return tweetDetails;
       }
 
-      tweetDetails = `
-  ------------------
-  Previously replied to:
-  Tweet ID: ${tweet.id_str}
-  User Text: ${tweet.text}`;
+      tweetDetails = 'pr: ' + tweet.id_str;
+  //     tweetDetails = `
+  // ------------------
+  // Previously replied to:
+  // Tweet ID: ${tweet.id_str}
+  // User Text: ${tweet.text}`;
       return tweetDetails;
     }).catch(function(err) {
       console.log('error:', err);
