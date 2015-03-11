@@ -178,7 +178,7 @@ var mentionBot = (function() {
 
   var streamKanye = function() {
     var stream = T.stream('statuses/filter', { track: '@kanyewest', language: 'en' });
-    var tweets = _('tweet', stream).throttle(250)
+    var tweets = _('tweet', stream).throttle(5000)
     .map(function(tweet){
       var re = /@[a-z0-9_]{1,16}/gi;
       tweet.text_no_mentions = tweet.text.replace(re, '').trim();
