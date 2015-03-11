@@ -123,37 +123,37 @@ var mentionBot = (function() {
   };
 
   var kanyeMentions = function() {
-    T.get('search/tweets', {q: '-http -t.co -#np -#NowPlaying @kaynewest', count: 50}, function(err, data, res) {
-      if(err) { console.error('error:', err); return; }
-      data.statuses.map(function(tweet) {
-        var re = /@[a-z0-9_]{1,16}/gi;
-        tweet.text_no_mentions = tweet.text.replace(re, '').trim();
-        return tweet;
-      }).filter(function(tweet, i) {
-        return ((tweet.text_no_mentions !== '' && tweet.text.indexOf('RT ') === -1 && tweet.text.indexOf('http') === -1));
-      }).forEach(function(tweet) {
-        var logTweet = logTweetAndResponse.curry(tweet);
-        getReply(tweet.text_no_mentions.replace('#', ''), logTweet).then(function(result) {
-          console.log(result);
-        });
-      });
-    });
+    // T.get('search/tweets', {q: '-http -t.co -#np -#NowPlaying @kaynewest', count: 50}, function(err, data, res) {
+    //   if(err) { console.error('error:', err); return; }
+    //   data.statuses.map(function(tweet) {
+    //     var re = /@[a-z0-9_]{1,16}/gi;
+    //     tweet.text_no_mentions = tweet.text.replace(re, '').trim();
+    //     return tweet;
+    //   }).filter(function(tweet, i) {
+    //     return ((tweet.text_no_mentions !== '' && tweet.text.indexOf('RT ') === -1 && tweet.text.indexOf('http') === -1));
+    //   }).forEach(function(tweet) {
+    //     var logTweet = logTweetAndResponse.curry(tweet);
+    //     getReply(tweet.text_no_mentions.replace('#', ''), logTweet).then(function(result) {
+    //       console.log(result);
+    //     });
+    //   });
+    // });
 
-    T.get('search/tweets', {q: '-http -t.co -#np -#NowPlaying #kaynewest', count: 50}, function(err, data, res) {
-      if(err) { console.error('error:', err); return; }
-      data.statuses.map(function(tweet) {
-        var re = /@[a-z0-9_]{1,16}/gi;
-        tweet.text_no_mentions = tweet.text.replace(re, '').trim();
-        return tweet;
-      }).filter(function(tweet, i) {
-        return ((tweet.text_no_mentions !== '' && tweet.text.indexOf('RT ') === -1 && tweet.text.indexOf('http') === -1));
-      }).forEach(function(tweet) {
-        var logTweet = logTweetAndResponse.curry(tweet);
-        getReply(tweet.text_no_mentions.replace('#', ''), logTweet).then(function(result) {
-          console.log(result);
-        });
-      });
-    });
+    // T.get('search/tweets', {q: '-http -t.co -#np -#NowPlaying #kaynewest', count: 50}, function(err, data, res) {
+    //   if(err) { console.error('error:', err); return; }
+    //   data.statuses.map(function(tweet) {
+    //     var re = /@[a-z0-9_]{1,16}/gi;
+    //     tweet.text_no_mentions = tweet.text.replace(re, '').trim();
+    //     return tweet;
+    //   }).filter(function(tweet, i) {
+    //     return ((tweet.text_no_mentions !== '' && tweet.text.indexOf('RT ') === -1 && tweet.text.indexOf('http') === -1));
+    //   }).forEach(function(tweet) {
+    //     var logTweet = logTweetAndResponse.curry(tweet);
+    //     getReply(tweet.text_no_mentions.replace('#', ''), logTweet).then(function(result) {
+    //       console.log(result);
+    //     });
+    //   });
+    // });
   };
 
   var y33zusMentions = function() {
@@ -205,26 +205,13 @@ var mentionBot = (function() {
       return true;
     });
 
-
-
     tweets.each(function(tweet) {
-      // var logTweet = logTweetAndResponse.curry(tweet);
-      // getReply(tweet.text_no_mentions, logTweet).then(function(result) {
-      //   console.log(result);
-      // });
-
-      getReply(tweet.text_no_mentions, console.log);
-  //     var tweetDetails = `
-  // ------------------
-  // Tweet ID: ${tweet.id_str}
-  // User ID: ${tweet.user.id_str}, Username: ${tweet.user.name}, Screenname: ${tweet.user.screen_name}
-  // User Text: ${tweet.text}`;
-  //     console.log(tweetDetails);
+      var logTweet = logTweetAndResponse.curry(tweet);
+      // getReply(tweet.text_no_mentions, console.log);
+      getReply(tweet.text_no_mentions, logTweet).then(function(result) {
+        console.log(result);
+      });
     });
-
-    // stream.on('tweet', function (tweet) {
-    //   console.log(tweet.id_str);
-    // });
   };
 
   return {
@@ -235,6 +222,4 @@ var mentionBot = (function() {
 
 })();
 
-
-mentionBot.streamKanye();
 module.exports = mentionBot;
