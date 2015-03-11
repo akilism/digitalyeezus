@@ -15,7 +15,7 @@ var getReply = function (message, cb) {
     'message': message
   };
 
-  request.post('http://ec2-54-191-116-132.us-west-2.compute.amazonaws.com:8088/yeezus',
+  request.post('http://www.digitalyeezus.com:8088/yeezus',
     { form: postvals },
     function (error, response, body) {
       if (error) { console.log(error); }
