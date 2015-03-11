@@ -176,14 +176,14 @@ var mentionBot = (function() {
 
 
   var streamKanye = function() {
-    var stream = T.stream('statuses/filter', { track: 'kanye west', language: 'en' });
+    var stream = T.stream('statuses/filter', { track: '@kanyewest', language: 'en' });
     var tweets = _('tweet', stream).map(function(tweet){
       var re = /@[a-z0-9_]{1,16}/gi;
       tweet.text_no_mentions = tweet.text.replace(re, '').trim();
       return tweet;
     })
     .filter(function(tweet) {
-      if(tweet.text_no_mentions === '') { return false; }
+      if(tweet.text_no_mentions === '' || tweet.user.id_str === '3045654005') { return false; }
 
       var re = /https{0,1}:/gi;
       var re1 = /#nowplaying/gi;
@@ -206,8 +206,8 @@ var mentionBot = (function() {
     });
 
     tweets.each(function(tweet) {
-      var logTweet = logTweetAndResponse.curry(tweet);
       // getReply(tweet.text_no_mentions, console.log);
+      var logTweet = logTweetAndResponse.curry(tweet);
       getReply(tweet.text_no_mentions, logTweet).then(function(result) {
         console.log(result);
       });
