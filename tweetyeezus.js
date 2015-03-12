@@ -215,12 +215,12 @@ var mentionBot = (function() {
     });
 
     tweetFinal.each(function(tweet) {
-      console.log(tweet.text, tweet.id_str);
-      getReply(tweet.text_no_mentions, console.log);
-      // var logTweet = logTweetAndResponse.curry(tweet);
-      // getReply(tweet.text_no_mentions, logTweet).then(function(result) {
-      //   console.log(result);
-      // });
+      // console.log(tweet.text, tweet.id_str);
+      // getReply(tweet.text_no_mentions, console.log);
+      var logTweet = logTweetAndResponse.curry(tweet);
+      getReply(tweet.text_no_mentions, logTweet).then(function(result) {
+        console.log(result);
+      });
     });
   };
 
