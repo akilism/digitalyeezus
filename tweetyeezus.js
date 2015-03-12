@@ -17,6 +17,8 @@ var mentionBot = (function() {
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
   });
 
+  var ignoreUsers = ['1720071938', '2355430362'];
+
   var checkForReply = function(tweetId) {
     return new Promise(function(resolve, reject) {
       rClient.sismember('repliedTweets', tweetId, function(err, res) {
@@ -83,7 +85,7 @@ var mentionBot = (function() {
         return tweetDetails;
       }
 
-      tweetDetails = 'pr: ' + tweet.id_str;
+      tweetDetails = '';
   //     tweetDetails = `
   // ------------------
   // Previously replied to:
@@ -165,8 +167,12 @@ var mentionBot = (function() {
         tweet.text_no_mentions = tweet.text.replace(re, '').trim();
         return tweet;
       }).filter(function(tweet, i) {
-        return ((tweet.text_no_mentions !== '' && tweet.text.indexOf('RT ') === -1 && tweet.text.indexOf('http') === -1));
+        return ((ignoreUsers.indexOf(tweet.user.id_str) === -1 &&
+                 tweet.text_no_mentions !== '' &&
+                 tweet.text.indexOf('RT ') === -1 &&
+                 tweet.text.indexOf('http') === -1));
       }).forEach(function(tweet) {
+        // console.log(tweet);
         var logTweet = logTweetAndResponse.curry(tweet);
         getReply(tweet.text_no_mentions, logTweet).then(function(result) {
           console.log(result);
@@ -174,7 +180,6 @@ var mentionBot = (function() {
       });
     });
   };
-
 
   var streamKanye = function() {
     var stream = T.stream('statuses/filter', { track: '@KanyeWest', language: 'en' });
@@ -191,7 +196,8 @@ var mentionBot = (function() {
       return tweet;
     })
     .filter(function(tweet) {
-      if(tweet.hasOwnProperty('retweeted_status') || tweet.text_no_mentions === '' || tweet.user.id_str === '3045654005') { return false; }
+      if(ignoreUsers.indexOf(tweet.user.id_str) > -1 || tweet.hasOwnProperty('retweeted_status') ||
+         tweet.text_no_mentions === '' || tweet.user.id_str === '3045654005') { return false; }
 
       var re = /https{0,1}:/gi;
       var re1 = /#nowplaying/gi;
