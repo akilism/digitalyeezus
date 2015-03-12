@@ -177,20 +177,27 @@ var mentionBot = (function() {
 
 
   var streamKanye = function() {
-    var stream = T.stream('statuses/filter', { track: '@kanyewest', language: 'en' });
-    var tweets = _('tweet', stream).throttle(5000)
+    var stream = T.stream('statuses/filter', { track: 'kanyewest', language: 'en' });
+    var stream2 = T.stream('statuses/filter', { track: 'KanyeWest', language: 'en' });
+
+    var tweets = _('tweet', stream);
+    var tweets2 = _('tweet', stream2);
+
+    _([tweets, tweets2]).merge()
+    .throttle(15000)
     .map(function(tweet){
       var re = /@[a-z0-9_]{1,16}/gi;
       tweet.text_no_mentions = tweet.text.replace(re, '').trim();
       return tweet;
     })
     .filter(function(tweet) {
-      if(tweet.text_no_mentions === '' || tweet.user.id_str === '3045654005') { return false; }
+      if(tweet.hasOwnProperty('retweeted_status') || tweet.text_no_mentions === '' || tweet.user.id_str === '3045654005') { return false; }
 
       var re = /https{0,1}:/gi;
       var re1 = /#nowplaying/gi;
       var re2 = /#np/gi;
       var re3 = /dailyvideo/gi;
+      var re3 = /billboard/gi;
 
       var result = re.exec(tweet.text);
       if (result) { return false; }
