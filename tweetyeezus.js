@@ -119,7 +119,7 @@ var mentionBot = (function() {
         if (error) { reject(error); }
         if (!error && response.statusCode === 200) {
           // console.log('reply: ', JSON.parse(body).reply);
-          resolve(cb(JSON.parse(body).reply));
+          resolve(cb(JSON.parse(body).reply.replace(/\(/g,'').replace(/\)/g,'')));
         }
       });
     });
