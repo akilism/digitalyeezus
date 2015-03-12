@@ -184,7 +184,7 @@ var mentionBot = (function() {
     var tweets2 = _('tweet', stream2);
 
     var tweetFinal = _([tweets, tweets2]).merge()
-    .throttle(15000)
+    .throttle(1000)
     .map(function(tweet){
       var re = /@[a-z0-9_]{1,16}/gi;
       tweet.text_no_mentions = tweet.text.replace(re, '').trim();
