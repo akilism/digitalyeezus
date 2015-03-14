@@ -15,7 +15,7 @@ var getReply = function (message, cb) {
     'message': message
   };
 
-  request.post('http://www.digitalyeezus.com:8088/yeezus',
+  request.post('http://chat.digitalyeezus.com:8888/yeezus',
     { form: postvals },
     function (error, response, body) {
       if (error) { console.log(error); }

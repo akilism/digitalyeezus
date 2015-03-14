@@ -113,7 +113,7 @@ var mentionBot = (function() {
 
     //aws http://ec2-54-191-116-132.us-west-2.compute.amazonaws.com:8088/yeezus
     return new Promise(function(resolve, reject) {
-      request.post('http://digitalyeezus.com:8888/yeezus',
+      request.post('http://chat.digitalyeezus.com:8888/yeezus',
       { form: postvals },
       function (error, response, body) {
         if (error) { reject(error); }
